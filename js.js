@@ -1,15 +1,47 @@
 var block;
 var obstacles = [];
 var score;
+// var myBackground;
+// var mySound;
+
 
 function startGame() {
-    myGameArea.start();
-    myScore = new Component("15px", "Consolas", "black", 10, 20,'text');
-    block = new Component(30, 30, "smiley.gif", 10, 120, "image");
+    score = new Component("15px", "Consolas", "black", 10, 20,'text');
+    block = new Component(30, 30, "hotpink", 10, 120);
     obstacle = new Component (10, 200, "green", 300, 100);
+    // mySound = new Sound("bounce.mp3");
+    myGameArea.start();
+
+    // myBackground = new Component(656, 270, "starry.jpg", 0, 0, "image");
 }
 
-//constructor called Component
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.key = e.keyCode;
+        });
+        window.addEventListener('keyup', function (e) {
+            myGameArea.key = false;
+        })
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
+    }
+};
+
+
+
+// constructor called Component
 function Component(width, height, color, x, y, type) {
     this.type = type;
     if (type == "image") {
@@ -22,9 +54,8 @@ function Component(width, height, color, x, y, type) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
-    // ctx = myGameArea.context;
-    //ctx.fillStyle = color;
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.gravity = 0.05;
+    this.gravitySpeed = 0;
     this.update = function(){
         ctx = myGameArea.context;
         if (type == "image") {
@@ -32,21 +63,28 @@ function Component(width, height, color, x, y, type) {
                 this.x,
                 this.y,
                 this.width, this.height);
+        }else if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
         }
-        // if (this.type == "text") {
-        //     ctx.font = this.width + " " + this.height;
-        //     ctx.fillStyle = color;
-        //     ctx.fillText(this.text, this.x, this.y);
-        // }
         else{
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
 
     };
-    this.newPos = function(){
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
         this.x += this.speedX;
-        this.y += this.speedY;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    };
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+        }
     };
 
     this.crashWith = function(otherobj) {
@@ -69,31 +107,20 @@ function Component(width, height, color, x, y, type) {
     }
 }
 
-//object called myGameArea
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        //interval is making it so that the updateGameArea function runs every 20th of a millisecond, or 50 times a second.
-        this.interval = setInterval(updateGameArea, 20);
-        window.addEventListener('keydown', function (e) {
-            myGameArea.key = e.keyCode;
-        });
-        window.addEventListener('keyup', function (e) {
-            myGameArea.key = false;
-        })
-    },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
-    stop : function() {
-        clearInterval(this.interval);
-    }
-};
+// function Sound(src) {
+//     this.sound = document.createElement("audio");
+//     this.sound.src = src;
+//     this.sound.setAttribute("preload", "auto");
+//     this.sound.setAttribute("controls", "none");
+//     this.sound.style.display = "none";
+//     document.body.appendChild(this.sound);
+//     this.play = function(){
+//         this.sound.play();
+//     };
+//     this.stop = function(){
+//         this.sound.pause();
+//     }
+// }
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {
@@ -109,6 +136,7 @@ function updateGameArea(){
 
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
+            // mySound.play();
             myGameArea.stop();
             return;
         }
@@ -134,8 +162,9 @@ function updateGameArea(){
         obstacles[i].update();
     }
 
-    myScore.text="SCORE: " + myGameArea.frameNo;
-    myScore.update();
+    score.text="SCORE: " + myGameArea.frameNo;
+
+    score.update();
     block.speedX = 0;
     block.speedY = 0;
     if (myGameArea.key && myGameArea.key == 37) {block.speedX = -1.5; }
@@ -144,12 +173,15 @@ function updateGameArea(){
     if (myGameArea.key && myGameArea.key == 40) {block.speedY = 1.5; }
     block.newPos();
     block.update();
+    // myBackground.newPos();
+    // myBackground.update();
 
 }
 
-function restart(){
-
+function accelerate(n) {
+    block.gravity = n;
 }
+
 
 
 //functions for buttons that I removed

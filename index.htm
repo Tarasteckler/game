@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
     <script src="js.js"></script>
     <link rel="stylesheet" href="css.css">
 
@@ -20,7 +18,8 @@
 
 <p>Use the up, down, left, and right arrow keys to control the square.</p>
 
-<button onclick="restart()">Restart</button>
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
+<!--<button onclick="restart()">Restart</button>-->
 
 </body>
 </html>
