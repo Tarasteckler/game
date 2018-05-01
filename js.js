@@ -1,17 +1,27 @@
 var block;
 var obstacles = [];
 var score;
+var scores = [];
+var highScore;
 // var myBackground;
-// var mySound;
 
+// var spaceClick = document.getElementById("spaceClick");
+// spaceClick.addEventListener("keyup", function(event){
+//     event.preventDefault();
+//     if(event.keyCode === 13 || event.keyCode === 32){
+//         document.getElementById("spaceClick").click();
+//     }
+// });
+
+
+//FIGURE OUT HOW TO RESTART GAME AND KEEP OLD SCORES SO YOU CAN HAVE A HIGH SCORE!!!!!!!!!!
 
 function startGame() {
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
     block = new Component(30, 30, "hotpink", 10, 120);
-    obstacle = new Component (10, 200, "green", 300, 100);
-    // mySound = new Sound("bounce.mp3");
+    block.gravity = 0;
     myGameArea.start();
-
+    highScore = new Component("15px", "Consolas", "black", 10, 30, 'text');
     // myBackground = new Component(656, 270, "starry.jpg", 0, 0, "image");
 }
 
@@ -40,11 +50,9 @@ var myGameArea = {
 };
 
 
-
-// constructor called Component
 function Component(width, height, color, x, y, type) {
     this.type = type;
-    if (type == "image") {
+    if (type === "image") {
         this.image = new Image();
         this.image.src = color;
     }
@@ -54,16 +62,16 @@ function Component(width, height, color, x, y, type) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
-    this.gravity = 0.05;
+    this.gravity = 0;
     this.gravitySpeed = 0;
     this.update = function(){
         ctx = myGameArea.context;
-        if (type == "image") {
+        if (type === "image") {
             ctx.drawImage(this.image,
                 this.x,
                 this.y,
                 this.width, this.height);
-        }else if (this.type == "text") {
+        }else if (this.type === "text") {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
@@ -80,11 +88,21 @@ function Component(width, height, color, x, y, type) {
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
     };
+
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
+        // var rocktop = 0;
         if (this.y > rockbottom) {
             this.y = rockbottom;
+            this.gravitySpeed = 0;
+            myGameArea.stop();
+            // scores.push(this.score);
+            // highScore = score;
         }
+        // if(block.y === 0){
+        //     this.gravitySpeed = 0;
+        //     myGameArea.stop();
+        // }
     };
 
     this.crashWith = function(otherobj) {
@@ -104,31 +122,23 @@ function Component(width, height, color, x, y, type) {
             crash = false;
         }
         return crash;
-    }
+    };
+    // scores.push(myGameArea.frameNo);
+    // getHighScore();
 }
-
-// function Sound(src) {
-//     this.sound = document.createElement("audio");
-//     this.sound.src = src;
-//     this.sound.setAttribute("preload", "auto");
-//     this.sound.setAttribute("controls", "none");
-//     this.sound.style.display = "none";
-//     document.body.appendChild(this.sound);
-//     this.play = function(){
-//         this.sound.play();
-//     };
-//     this.stop = function(){
-//         this.sound.pause();
-//     }
+//
+// function getHighScore(){
+//     scores.sort(function(a, b){return b-a});
+//     highScore = "HIGH SCORE: " + scores[0];
 // }
 
+
 function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) {
+    if ((myGameArea.frameNo / n) % 1 === 0) {
         return true;
     }else{
         return false;
     }
-
 }
 
 function updateGameArea(){
@@ -145,7 +155,7 @@ function updateGameArea(){
     myGameArea.clear();
     myGameArea.frameNo += 1;
 
-    if (myGameArea.frameNo == 1 || everyinterval(150)){
+    if (myGameArea.frameNo === 1 || everyinterval(150)){
         x = myGameArea.canvas.width;
         minHeight = 20;
         maxHeight = 200;
@@ -157,51 +167,40 @@ function updateGameArea(){
         obstacles.push(new Component (10, x - height - gap, "orange", x, height + gap));
     }
 
-    for (i=0; i < obstacles.length; i ++){
+    for (i = 0; i < obstacles.length; i ++){
         obstacles[i].x -= 1;
         obstacles[i].update();
     }
 
-    score.text="SCORE: " + myGameArea.frameNo;
-
+    score.text = "SCORE: " + myGameArea.frameNo;
     score.update();
-    block.speedX = 0;
-    block.speedY = 0;
-    if (myGameArea.key && myGameArea.key == 37) {block.speedX = -1.5; }
-    if (myGameArea.key && myGameArea.key == 39) {block.speedX = 1.5; }
-    if (myGameArea.key && myGameArea.key == 38) {block.speedY = -1.5; }
-    if (myGameArea.key && myGameArea.key == 40) {block.speedY = 1.5; }
+
+
+
+    // block.speedX = 0;
+    // block.speedY = 0;
+    // if (myGameArea.key && myGameArea.key == 37) {block.speedX = -2; }
+    // if (myGameArea.key && myGameArea.key == 39) {block.speedX = 2; }
+    // if (myGameArea.key && myGameArea.key == 38) {block.speedY = -2; }
+    // if (myGameArea.key && myGameArea.key == 40) {block.speedY = 2; }
+
+    // if (myGameArea.key === 32) {accelerate(-0.2);}
+
     block.newPos();
     block.update();
+
     // myBackground.newPos();
     // myBackground.update();
-
 }
 
 function accelerate(n) {
+    if (!myGameArea.interval){
+        myGameArea.interval = setInterval (updateGameArea, 20);
+    }
     block.gravity = n;
 }
 
-
-
-//functions for buttons that I removed
-// function moveUp(){
-//     pinkPiece.speedY -= 1;
-// }
-//
-// function moveDown(){
-//     pinkPiece.speedY += 1;
-// }
-//
-// function moveRight(){
-//     pinkPiece.speedX += 1;
-// }
-//
-// function moveLeft(){
-//     pinkPiece.speedX -= 1;
-// }
-//
-// function stopMove(){
-//     pinkPiece.speedX = 0;
-//     pinkPiece.speedY = 0;
+// function restart(){
+//     myGameArea.clear();
+//     startGame();
 // }
