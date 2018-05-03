@@ -1,7 +1,7 @@
 var block;
 var obstacles = [];
 var score;
-var scores = [];
+var scores = [0];
 var highScore;
 // var myBackground;
 
@@ -14,14 +14,14 @@ var highScore;
 // });
 
 
-//FIGURE OUT HOW TO RESTART GAME AND KEEP OLD SCORES SO YOU CAN HAVE A HIGH SCORE!!!!!!!!!!
-
 function startGame() {
+    document.getElementById("buttonSpace").innerHTML = "";
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
     block = new Component(30, 30, "hotpink", 10, 120);
     block.gravity = 0;
+    highScore = new Component("15px", "Consolas", "black", 10, 45, 'text');
     myGameArea.start();
-    highScore = new Component("15px", "Consolas", "black", 10, 30, 'text');
+
     // myBackground = new Component(656, 270, "starry.jpg", 0, 0, "image");
 }
 
@@ -80,7 +80,6 @@ function Component(width, height, color, x, y, type) {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
-
     };
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
@@ -96,8 +95,11 @@ function Component(width, height, color, x, y, type) {
             this.y = rockbottom;
             this.gravitySpeed = 0;
             myGameArea.stop();
-            // scores.push(this.score);
-            // highScore = score;
+            document.getElementById("buttonSpace").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            scores.push(myGameArea.frameNo);
+            console.log(scores);
+            scores.sort(function(a, b){return b-a});
+            //getHighScore();
         }
         // if(block.y === 0){
         //     this.gravitySpeed = 0;
@@ -123,15 +125,13 @@ function Component(width, height, color, x, y, type) {
         }
         return crash;
     };
-    // scores.push(myGameArea.frameNo);
-    // getHighScore();
 }
-//
+
 // function getHighScore(){
 //     scores.sort(function(a, b){return b-a});
-//     highScore = "HIGH SCORE: " + scores[0];
+//     // highScore = scores[0];
+//     // console.log(highScore);
 // }
-
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 === 0) {
@@ -146,8 +146,11 @@ function updateGameArea(){
 
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
-            // mySound.play();
             myGameArea.stop();
+            document.getElementById("buttonSpace").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            scores.push(myGameArea.frameNo);
+            console.log(scores);
+            scores.sort(function(a, b){return b-a});
             return;
         }
     }
@@ -174,8 +177,8 @@ function updateGameArea(){
 
     score.text = "SCORE: " + myGameArea.frameNo;
     score.update();
-
-
+    highScore.text= "HIGH SCORE: " + scores[0];
+    highScore.update();
 
     // block.speedX = 0;
     // block.speedY = 0;
@@ -188,7 +191,6 @@ function updateGameArea(){
 
     block.newPos();
     block.update();
-
     // myBackground.newPos();
     // myBackground.update();
 }
@@ -200,7 +202,16 @@ function accelerate(n) {
     block.gravity = n;
 }
 
-// function restart(){
-//     myGameArea.clear();
-//     startGame();
-// }
+function restart(){
+    myGameArea.clear();
+    block.frameNo = 0;
+    myGameArea.frameNo = 0;
+    myGameArea.interval = 0;
+    block.x = 0;
+    block.y = 120;
+    block.speedX = 0;
+    block.speedY = 0;
+    obstacles = [];
+    startGame();
+    console.log(myGameArea.interval);
+}
