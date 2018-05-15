@@ -1,0 +1,29 @@
+header{
+    -webkit-text-fill-color: #ff197a;
+    -webkit-background-clip: text;
+    font-weight: bold;
+    font-size: 70px;
+    font-family: arial, sans-serif;
+    width: 800px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.menu{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menuButton{
+    background-color: lightblue;
+    color: white;
+    border-radius: 2px;
+    height: 45px;
+    font-size: 25px;
+}
+
+.menuButton:hover{
+    background-color: lightgreen;
+    color: white;
+    transition-duration: 0.4s;
+}

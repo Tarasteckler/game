@@ -2,3 +2,34 @@ canvas{
     border: 1px solid #d3d3d3;
     background-color: lightskyblue;
 }
+
+#divcanvas{
+    /*border: 1px solid #d3d3d3;*/
+    margin: auto;
+    width: 25%;
+    height: 20%;
+}
+
+h1{
+    font-size: 50px;
+    margin-left: 38%;
+    /*margin-right: 38%;*/
+    font-family: impact, fantasy;
+    color: deeppink;
+}
+
+#jump, #restart{
+    margin-left: 50%;
+    margin-right: 50%;
+    border-radius: 40%;
+    font-size: 24px;
+    border: 2px solid hotpink;
+    background-color: pink;
+}
+
+#jump:hover{
+    background-color: hotpink;
+}
+#restart:hover{
+    background-color: hotpink;
+}
