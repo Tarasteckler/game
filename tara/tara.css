@@ -30,6 +30,17 @@ h1{
 #jump:hover{
     background-color: hotpink;
 }
+
 #restart:hover{
     background-color: hotpink;
+}
+
+.choice{
+    height: 100px;
+    width: 70px;
+}
+
+#restartdiv{
+    text-align: center;
+    margin: auto;
 }

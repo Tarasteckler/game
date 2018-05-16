@@ -15,12 +15,12 @@ var myBackground;
 
 
 function startGame() {
-    document.getElementById("restart").innerHTML = "";
+    document.getElementById("restartdiv").innerHTML = "";
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
-    block = new Component(40, 35, "img/bean.png", 10, 120, 'image');
+    block = new Component(25, 35, "img/" + document.getElementById("choice").value + ".png", 10, 120, 'image');
     block.gravity = 0;
     highScore = new Component("15px", "Consolas", "black", 10, 45, 'text');
-    myBackground = new Component(656, 290, "img/background.jpg", 0, 0, "background");
+    myBackground = new Component(656, 290, "img/1.jpg", 0, 0, "background");
     myGameArea.start();
 }
 
@@ -105,7 +105,7 @@ function Component(width, height, color, x, y, type) {
             this.y = rockbottom;
             this.gravitySpeed = 0;
             myGameArea.stop();
-            document.getElementById("restart").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            document.getElementById("restartdiv").innerHTML = "<br> Oh no! You died. Try again!<br> <br><button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
             scores.sort(function(a, b){return b-a});
@@ -152,7 +152,7 @@ function updateGameArea(){
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
             myGameArea.stop();
-            document.getElementById("restart").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            document.getElementById("restartdiv").innerHTML = "<button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
             scores.sort(function(a, b){return b-a});
@@ -174,8 +174,8 @@ function updateGameArea(){
         minGap = 50;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        obstacles.push(new Component(10, height, "orange", x, 0));
-        obstacles.push(new Component (10, x - height - gap, "orange", x, height + gap));
+        obstacles.push(new Component(10, height, "purple", x, 0));
+        obstacles.push(new Component (10, x - height - gap, "purple", x, height + gap));
     }
 
     for (i = 0; i < obstacles.length; i ++){

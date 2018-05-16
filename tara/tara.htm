@@ -7,15 +7,19 @@
     <link rel="stylesheet" href="tara.css">
 </head>
 
-<body onload="startGame()"><br>
+<body ><br>
 <h1>JUMPING BEAN BONANZA</h1>
+Choose your bean color:
+<select id="choice">
+    <option value="bean">Blue</option>
+    <option value="redbean">Red</option>
+</select>
+<button onclick="startGame()">Start game</button>
 
 <div id="divcanvas"></div>
 <button id="jump" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">JUMP!</button>
-<div id="restart"></div>
-
+<div id="restartdiv"></div>
 
 </body>
-
 
 </html>
