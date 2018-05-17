@@ -17,10 +17,10 @@ var myBackground;
 function startGame() {
     document.getElementById("restartdiv").innerHTML = "";
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
-    block = new Component(25, 35, "img/" + document.getElementById("choice").value + ".png", 10, 120, 'image');
+    block = new Component(25, 35, "img/bean.png", 10, 120, 'image');
     block.gravity = 0;
     highScore = new Component("15px", "Consolas", "black", 10, 45, 'text');
-    myBackground = new Component(656, 290, "img/1.jpg", 0, 0, "background");
+    myBackground = new Component(656, 290, "img/city.jpg", 0, 0, "background");
     myGameArea.start();
 }
 
