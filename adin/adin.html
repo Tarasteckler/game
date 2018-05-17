@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="adin.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Adin's Game</title>
+    <script src="adin.js"></script>
 </head>
-<body>
+<body onload="startGame()">
 
-ADIN'S GAME
-
+<!--keyboard controls-->
+<button onmousedown="moveup()" onmouseup="stopMove()">UP</button>
+<button onmousedown="movedown()" onmouseup="stopMove()" >DOWN</button>
+<button onmousedown="moveleft()" onmouseup="stopMove()" >LEFT</button>
+<button onmousedown="moveright()" onmouseup="stopMove()" >RIGHT</button>
 </body>
 </html>
