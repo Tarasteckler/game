@@ -109,7 +109,6 @@ function Component(width, height, color, x, y, type) {
             scores.push(myGameArea.frameNo);
             console.log(scores);
             scores.sort(function(a, b){return b-a});
-            //getHighScore();
         }
         // if(block.y === 0){
         //     this.gravitySpeed = 0;
