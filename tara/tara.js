@@ -5,11 +5,15 @@ var scores = [0];
 var highScore;
 var myBackground;
 
-// var spaceClick = document.getElementById("spaceClick");
-// spaceClick.addEventListener("keyup", function(event){
-//     event.preventDefault();
-//     if(event.keyCode === 13 || event.keyCode === 32){
-//         document.getElementById("spaceClick").click();
+// var spaceJump = document.getElementById("jump");
+// window.addEventListener("keydown", function(){
+//     if(myGameArea.keyCode === 32){
+//         accelerate(-0.2);
+//     }
+// });
+// window.addEventListener("keyup", function(){
+//     if(myGameArea.keyCode === 32){
+//         accelerate(0.1);
 //     }
 // });
 
@@ -100,7 +104,6 @@ function Component(width, height, color, x, y, type) {
 
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
-        // var rocktop = 0;
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = 0;
@@ -108,12 +111,15 @@ function Component(width, height, color, x, y, type) {
             document.getElementById("restartdiv").innerHTML = "<br> Oh no! You died. Try again!<br> <br><button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
-            scores.sort(function(a, b){return b-a});
+            scores.sort(function(a, b){return b - a});
         }
-        // if(block.y === 0){
-        //     this.gravitySpeed = 0;
-        //     myGameArea.stop();
-        // }
+        if(myGameArea.frameNo > 2 && this.y < 0){
+            myGameArea.stop();
+            document.getElementById("restartdiv").innerHTML = "<br> Oh no! You died. Try again!<br> <br><button id='restart' onclick=\"restart()\">Restart</button>\n";
+            scores.push(myGameArea.frameNo);
+            console.log(scores);
+            scores.sort(function(a, b){return b - a});
+        }
     };
 
     this.crashWith = function(otherobj) {
@@ -147,14 +153,13 @@ function everyinterval(n) {
 function updateGameArea(){
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
 
-
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
             myGameArea.stop();
             document.getElementById("restartdiv").innerHTML = "<button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
-            scores.sort(function(a, b){return b-a});
+            scores.sort(function(a, b){return b - a});
             return;
         }
     }
@@ -165,14 +170,16 @@ function updateGameArea(){
     myBackground.newPos();
     myBackground.update();
 
+
+
     if (myGameArea.frameNo === 1 || everyinterval(150)){
         x = myGameArea.canvas.width;
         minHeight = 20;
         maxHeight = 200;
-        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
         minGap = 50;
         maxGap = 200;
-        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        gap = Math.floor(Math.random() * ( maxGap - minGap + 1) + minGap);
         obstacles.push(new Component(10, height, "purple", x, 0));
         obstacles.push(new Component (10, x - height - gap, "purple", x, height + gap));
     }
@@ -186,17 +193,6 @@ function updateGameArea(){
     score.update();
     highScore.text= "HIGH SCORE: " + scores[0];
     highScore.update();
-
-
-    // block.speedX = 0;
-    // block.speedY = 0;
-    // if (myGameArea.key && myGameArea.key == 37) {block.speedX = -2; }
-    // if (myGameArea.key && myGameArea.key == 39) {block.speedX = 2; }
-    // if (myGameArea.key && myGameArea.key == 38) {block.speedY = -2; }
-    // if (myGameArea.key && myGameArea.key == 40) {block.speedY = 2; }
-
-    // if (myGameArea.key === 32) {accelerate(-0.2);}
-
     block.newPos();
     block.update();
 
