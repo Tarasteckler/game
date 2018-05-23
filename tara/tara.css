@@ -12,9 +12,10 @@ canvas{
 
 h1{
     font-size: 50px;
-    margin-left: 38%;
+    margin-right: 20%;
+    margin-left: 35%;
     /*margin-right: 38%;*/
-    font-family: impact, fantasy;
+    font-family: "American Typewriter", fantasy;
     color: deeppink;
 }
 
@@ -25,8 +26,11 @@ h1{
     font-size: 24px;
     border: 2px solid hotpink;
     background-color: pink;
+    font-family: "American Typewriter", sans-serif;
+
 }
 #start{
+    font-family: "American Typewriter", sans-serif;
     margin-left: 50%;
     margin-right: 50%;
     border-radius: 40%;
@@ -58,8 +62,15 @@ h1{
 #restartdiv{
     text-align: center;
     margin: auto;
+    font-family: "American Typewriter", sans-serif;
 }
 body{
-    background-color: #ccccff
-;
+    background-color: #ccccff;
 }
+
+#instructions{
+    font-family: "American Typewriter", sans-serif;
+    text-align: center;
+    margin: auto;
+}
+

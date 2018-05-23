@@ -20,6 +20,7 @@ var myBackground;
 
 function startGame() {
     document.getElementById("restartdiv").innerHTML = "";
+    document.getElementById("startingGame").innerHTML = "";
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
     block = new Component(25, 35, "img/bean.png", 10, 120, 'image');
     block.gravity = 0;
@@ -156,7 +157,7 @@ function updateGameArea(){
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
             myGameArea.stop();
-            document.getElementById("restartdiv").innerHTML = "<button id='restart' onclick=\"restart()\">Restart</button>\n";
+            document.getElementById("restartdiv").innerHTML = "<br>Ouch! You died. Try again!<br><button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
             scores.sort(function(a, b){return b - a});
