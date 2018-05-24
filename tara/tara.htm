@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="tara.css">
 </head>
 
-<body ><br>
+<body><br>
 <h1>JUMPING BEAN BONANZA</h1>
 
-<button id="start" onclick="startGame()">Start game</button>
+<div id="startingGame"><button id="start" onclick="startGame()">Start game</button></div>
 
-<div id="divcanvas"></div>
-<button id="jump" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">JUMP!</button>
+<div id="divcanvas"></div><br>
+<p id="instructions">Bounce the bean for as long as you can without hitting the ceiling, floor, or obstacles.</p><br>
+<button id="jump" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">JUMP!</button><br>
 <div id="restartdiv"></div>
 
 </body>
