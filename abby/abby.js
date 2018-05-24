@@ -1,3 +1,9 @@
+// make crash with function work
+//create break in every staircase
+// create pause function
+// score
+//continuous staircases go all the way to bottom of canvas and appear gradually
+
 function startGame() {
     myGameArea.start();
     myGamePiece = new Component(10, 10, "purple", 0, 200);
@@ -66,7 +72,7 @@ function Component(width, height, color, x, y){
         if((myBottom < otherTop) || (myTop > otherBottom) || (myRight < otherLeft) || (myLeft > otherRight)){
             crash = false;
         }
-
+        return crash;
     }
 }
 
@@ -93,16 +99,22 @@ function updateGameArea(){
     for(var i=0; i<obs1.length; i++){
         if(myGamePiece.crashWith(obs1[i])){
             myGameArea.stop();
+            document.getElementById("gameOver").innerHTML="Game over";
         }
     }
 
     var x, y;
     myGameArea.clear();
-    myGameArea.frameNo+=1;
 
-    if(myGameArea.frameNo==1||everyInterval(200)){
+    if(!pause) {
+        myGameArea.frameNo+=1;
+    }
+    var pause = false;
+
+
+    if(myGameArea.frameNo==1||everyInterval(400)){
          x=myGameArea.canvas.width;
-         y=myGameArea.canvas.height-200;
+         y=myGameArea.canvas.height-400;
          generateMaze();
     }
     for(var i = 0; i< obs1.length; i++){
@@ -122,19 +134,28 @@ function updateGameArea(){
 
     if(myGameArea.key && myGameArea.key==37){
         myGamePiece.speedX = -1;
+        pause = false;
     }
     if(myGameArea.key && myGameArea.key ==39){
         myGamePiece.speedX = 1;
+        pause = false;
     }
     if(myGameArea.key && myGameArea.key == 38){
         myGamePiece.speedY = -1;
+        pause = false;
     }
     if(myGameArea.key && myGameArea.key == 40){
         myGamePiece.speedY = 1;
+        pause = false;
     }
     if(myGameArea.key && myGameArea.key == 32){
         stopMove();
-        !(myGameArea.frameNo==1||everyInterval(250));
+        console.log(pause);
+        if(pause) {
+            pause = false;
+        } else {
+            pause = true;
+        }
     }
 
     myGamePiece.newPos();
@@ -174,7 +195,8 @@ function generateMaze(){
     var width=0;
     var height=0;
     var count = 0;
-    gap = gaps1[Math.floor(Math.random()*gaps1.length)];
+    var gap = gaps1[Math.floor(Math.random()*gaps1.length)];
+    console.log(gap);
     //create at least one open space in each obstacle
     while (obs1[count].x+obs1[count].width<400 && obs1[count].y+obs1[count].height<400){
         var tempX=obs1[count].x;
@@ -182,7 +204,7 @@ function generateMaze(){
         var tempY = obs1[count].y;
         var tempHeight = obs1[count].height;
         if(count % 2 == 0){
-            if(tempY>gap&&tempY<gap+20){
+            if(tempY>gap&&tempY<gap+tempHeight){
                 height=heights[Math.floor(Math.random()*heights.length)];
                 obs1.push(new Obstacle(10,height,tempX+tempWidth+20,tempY+30));
             }else{
@@ -231,7 +253,7 @@ function generateMaze(){
     var gap3 = gaps3[Math.floor(Math.random()*gaps3.length)];
     obs3.push(obst3);
     var count3=0;
-    while(obs3[count3].x+obs3[count3].width<400&&obs3[count3].y+obs3[count3].height<400){
+    while(obs3[count3].y+obs3[count3].height<400){
         tempX=obs3[count3].x;
         tempWidth = obs3[count3].width;
         tempY = obs3[count3].y;
