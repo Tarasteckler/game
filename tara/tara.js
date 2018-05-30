@@ -5,22 +5,27 @@ var scores = [0];
 var highScore;
 var myBackground;
 
-// var spaceClick = document.getElementById("spaceClick");
-// spaceClick.addEventListener("keyup", function(event){
-//     event.preventDefault();
-//     if(event.keyCode === 13 || event.keyCode === 32){
-//         document.getElementById("spaceClick").click();
+// var spaceJump = document.getElementById("jump");
+// window.addEventListener("keydown", function(){
+//     if(myGameArea.keyCode === 32){
+//         accelerate(-0.2);
+//     }
+// });
+// window.addEventListener("keyup", function(){
+//     if(myGameArea.keyCode === 32){
+//         accelerate(0.1);
 //     }
 // });
 
 
 function startGame() {
-    document.getElementById("restart").innerHTML = "";
+    document.getElementById("restartdiv").innerHTML = "";
+    document.getElementById("startingGame").innerHTML = "";
     score = new Component("15px", "Consolas", "black", 10, 20,'text');
-    block = new Component(40, 35, "img/bean.png", 10, 120, 'image');
+    block = new Component(25, 35, "img/bean.png", 10, 120, 'image');
     block.gravity = 0;
     highScore = new Component("15px", "Consolas", "black", 10, 45, 'text');
-    myBackground = new Component(656, 290, "img/background.jpg", 0, 0, "background");
+    myBackground = new Component(656, 290, "img/city.jpg", 0, 0, "background");
     myGameArea.start();
 }
 
@@ -100,21 +105,22 @@ function Component(width, height, color, x, y, type) {
 
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
-        // var rocktop = 0;
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = 0;
             myGameArea.stop();
-            document.getElementById("restart").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            document.getElementById("restartdiv").innerHTML = "<br> Oh no! You died. Try again!<br> <br><button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
-            scores.sort(function(a, b){return b-a});
-            //getHighScore();
+            scores.sort(function(a, b){return b - a});
         }
-        // if(block.y === 0){
-        //     this.gravitySpeed = 0;
-        //     myGameArea.stop();
-        // }
+        if(myGameArea.frameNo > 2 && this.y < 0){
+            myGameArea.stop();
+            document.getElementById("restartdiv").innerHTML = "<br> Oh no! You died. Try again!<br> <br><button id='restart' onclick=\"restart()\">Restart</button>\n";
+            scores.push(myGameArea.frameNo);
+            console.log(scores);
+            scores.sort(function(a, b){return b - a});
+        }
     };
 
     this.crashWith = function(otherobj) {
@@ -148,14 +154,13 @@ function everyinterval(n) {
 function updateGameArea(){
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
 
-
     for (i = 0; i < obstacles.length; i += 1){
         if (block.crashWith(obstacles[i])){
             myGameArea.stop();
-            document.getElementById("restart").innerHTML = "<button onclick=\"restart()\">Restart</button>\n";
+            document.getElementById("restartdiv").innerHTML = "<br>Ouch! You died. Try again!<br><button id='restart' onclick=\"restart()\">Restart</button>\n";
             scores.push(myGameArea.frameNo);
             console.log(scores);
-            scores.sort(function(a, b){return b-a});
+            scores.sort(function(a, b){return b - a});
             return;
         }
     }
@@ -166,16 +171,18 @@ function updateGameArea(){
     myBackground.newPos();
     myBackground.update();
 
+
+
     if (myGameArea.frameNo === 1 || everyinterval(150)){
         x = myGameArea.canvas.width;
         minHeight = 20;
         maxHeight = 200;
-        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
         minGap = 50;
         maxGap = 200;
-        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        obstacles.push(new Component(10, height, "orange", x, 0));
-        obstacles.push(new Component (10, x - height - gap, "orange", x, height + gap));
+        gap = Math.floor(Math.random() * ( maxGap - minGap + 1) + minGap);
+        obstacles.push(new Component(10, height, "purple", x, 0));
+        obstacles.push(new Component (10, x - height - gap, "purple", x, height + gap));
     }
 
     for (i = 0; i < obstacles.length; i ++){
@@ -187,17 +194,6 @@ function updateGameArea(){
     score.update();
     highScore.text= "HIGH SCORE: " + scores[0];
     highScore.update();
-
-
-    // block.speedX = 0;
-    // block.speedY = 0;
-    // if (myGameArea.key && myGameArea.key == 37) {block.speedX = -2; }
-    // if (myGameArea.key && myGameArea.key == 39) {block.speedX = 2; }
-    // if (myGameArea.key && myGameArea.key == 38) {block.speedY = -2; }
-    // if (myGameArea.key && myGameArea.key == 40) {block.speedY = 2; }
-
-    // if (myGameArea.key === 32) {accelerate(-0.2);}
-
     block.newPos();
     block.update();
 
