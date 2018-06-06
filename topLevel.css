@@ -15,15 +15,21 @@ header{
 }
 
 .menuButton{
-    background-color: lightblue;
+    background-color: white;
     color: white;
-    border-radius: 2px;
+    border-radius: 10px;
     height: 45px;
     font-size: 25px;
 }
 
 .menuButton:hover{
-    background-color: lightgreen;
+    background-color: orange;
     color: white;
     transition-duration: 0.4s;
+}
+
+body{
+    background: radial-gradient(circle, white, cornflowerblue, darkblue) fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
