@@ -1,0 +1,102 @@
+canvas {
+    border: 1px solid #47515f;
+    background: linear-gradient(180deg, #cae0e3 20%, #7992a3 0%);
+    padding: 0;
+    margin: auto;
+    /*display: block;*/
+    width: 800px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    right: 0;
+}
+
+body{
+    background-color: #3a4758;
+}
+
+h1{
+    margin: auto;
+    width: 15%;
+    padding: 0px;
+    display: block;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 34px;
+    letter-spacing: -1px;
+    line-height: 40px;
+    color: white;
+
+
+}
+
+th, td {
+    padding: 8px;
+    /*text-align: center;*/
+    color: white;
+    background-color: #617485;
+}
+
+#scoreboard {
+    position: relative;
+    top: 600px;
+    left: 10px;
+    font-size: 9px;
+    font-color: white;
+}
+
+
+#div{
+    position: absolute;
+    margin: auto;
+    top: 550px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 100px;
+}
+
+#restart{
+    position: absolute;
+    margin: auto;
+    top: 650px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 100px;
+}
+
+
+
+#nameID{
+    position: absolute;
+    margin: auto;
+    top: -400px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 100px;
+}
+
+#scoreTable {
+    width: 20%;
+    border: 1px;
+    top: -300px;
+    position: absolute;
+    left: 450px;
+    right: 0;
+    bottom: 0;
+    /*margin: auto;*/
+    /*margin-bottom: 70px;*/
+    font-size: 12px;
+
+}
+
+#message{
+    color: #a4a4a4;
+}
