@@ -38,7 +38,16 @@ h1{
     font-size: 15px;
     border: 2px solid hotpink;
     background-color: pink;
+}
 
+#home{
+    font-family: "American Typewriter", sans-serif;
+    margin-left: 48.5%;
+    border-radius: 40%;
+    width: 150px;
+    font-size: 15px;
+    border: 2px solid hotpink;
+    background-color: pink;
 }
 
 #jump:hover{
@@ -51,7 +60,10 @@ h1{
 
 #start:hover{
     background-color: hotpink;
+}
 
+#home:hover{
+    background-color: hotpink;
 }
 
 .choice{
@@ -74,4 +86,3 @@ body{
     text-align: center;
     margin: auto;
 }
-
