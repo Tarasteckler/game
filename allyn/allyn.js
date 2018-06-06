@@ -1,6 +1,8 @@
 
 var myGamePiece;
 var myObstacles = [];
+var mySeaweed = [];
+var myOctopus = [];
 var myCoins = [];
 var myBubbles = [];
 var myRuns = [];
@@ -20,9 +22,8 @@ function startGame() {
     myGamePiece = new component(60, 48, "images/submarine.png", 10, 120, "image");
     myScore = new component("25px", "Consolas", "black", 240, 40, "text");
     myStarScore = new component("25px", "Consolas", "black", 500, 40, "text");
-    mySound = new sound("music/coinSound.zip");
+    mySound = new sound("music/coinSound.wave");
     myMusic = new sound("music/background.mp3");
-    myMusic.play();
     myGameArea.start();
 }
 
@@ -38,6 +39,7 @@ function enterName() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
+        myMusic.play();
 
         document.getElementById('restart').style.display = 'inline';
         document.getElementById("continue").disabled = true;
@@ -62,7 +64,7 @@ var myGameArea = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     stop : function() {
-
+        myMusic.stop();
         document.getElementById('restart').style.display = 'none';
         clearInterval(this.interval);
         document.getElementById('continue').disable = false;
@@ -106,6 +108,7 @@ var myGameArea = {
 
     },
     pause : function(){
+        myMusic.stop();
 
         document.getElementById('restart').style.display = 'none';
         document.getElementById("continue").disabled = false;
@@ -216,8 +219,14 @@ function updateGameArea() {
         }
     }
 
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
+    for (i = 0; i < mySeaweed.length; i += 1) {
+        if (myGamePiece.crashWith(mySeaweed[i])) {
+            myGameArea.stop();
+            return;
+        }
+    }
+    for (i = 0; i < myOctopus.length; i += 1) {
+        if (myGamePiece.crashWith(myOctopus[i])) {
             myGameArea.stop();
             return;
         }
@@ -235,17 +244,23 @@ function updateGameArea() {
         var bubSize = Math.floor(Math.random() * 30) + 10;
         var bubPos1 = Math.floor(Math.random() * 300) + 400;
         var bubPos2 = Math.floor(Math.random() * 300) + 400;
-        myObstacles.push(new component(40, 40, "images/octopus.png", x + 50, z, "image"));
-        myObstacles.push(new component(70, 100, "images/seaweed.png", x, 320, "image"));
+        myOctopus.push(new component(40, 40, "images/octopus.png", x + 50, z, "image"));
+        mySeaweed.push(new component(70, 100, "images/seaweed.png", x, 320, "image"));
         // myCoins.push(new component(20, 20, "star.png", x + 50, coinPos, "image"));
         myCoins.push(new component(20, 20, "images/star.png", bubPos2 +5 , 325, "image"));
         myBubbles.push(new component(30, 30, "images/bubble.png", bubPos2, 320, "image"))
         myBubbles.push(new component(bubSize, bubSize, "images/bubble.png", bubPos1, 300, "image"))
     }
-    for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].speedX = -1;
-        myObstacles[i].newPos();
-        myObstacles[i].update();
+    for (i = 0; i < mySeaweed.length; i += 1) {
+        mySeaweed[i].speedX = -1;
+        mySeaweed[i].newPos();
+        mySeaweed[i].update();
+    }
+    for (i = 0; i < myOctopus.length; i += 1) {
+        myOctopus[i].speedX = -1;
+        myOctopus[i].speedX = -1;
+        myOctopus[i].newPos();
+        myOctopus[i].update();
     }
 
     for (i = 0; i < myCoins.length; i += 1) {
