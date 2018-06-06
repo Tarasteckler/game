@@ -65,8 +65,9 @@ h1{
     font-family: "American Typewriter", sans-serif;
 }
 body{
-    background-color: #ccccff;
-}
+    background: radial-gradient(circle, white, mediumpurple, purple) fixed;
+    background-repeat: no-repeat;
+    background-size: cover;}
 
 #instructions{
     font-family: "American Typewriter", sans-serif;
