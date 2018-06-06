@@ -1,13 +1,22 @@
-// https://unity3d.com/learn/tutorials/topics/physics/making-angry-birds-style-game-part-1
+
+//player
 var block1;
+//green bars
 var myObstacles=[];
+//coins
 var myCoins=[];
+//score
 var score;
+//bonus score
+var coinNum=0
+//moving obstacles
+var myBricks=[];
 
 function startGame() {
     myGameArea.start();
     block1 = new BlockMaker(50, 30, "red", 0, 0);
     score = new BlockMaker("30px", "Consolas", "black", 280, 40, "text");
+
 }
 
 var myGameArea = {
@@ -93,10 +102,11 @@ function updateGameArea() {
             return;
         }
     }
-    for (i=0; i<myCoins.length; i++){
-        if(block1.crashWith(myCoins[i])){
+    //removes coins and adds 10 points if crash with coin
+    for (i = 0; i < myCoins.length; i++) {
+        if (block1.crashWith(myCoins[i])) {
             myCoins.splice(i);
-            score+=100;
+            coinNum += 10
         }
     }
     myGameArea.clear();
@@ -106,26 +116,32 @@ function updateGameArea() {
         y = myGameArea.canvas.height - 200;
         var minHeight = 20;
         var maxHeight = 200;
-        var height= Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
 
         //determines verticle space between obstacles and adds them to array
         var minGap = 50;
         var maxGap = 200;
-        var gap=Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
         myObstacles.push(new BlockMaker(10, x - height - gap, "green", x, height + gap));
         myObstacles.push(new BlockMaker(10, height, "green", x, 0));
 
         //creates random coins
-        var coinx=Math.floor(Math.random()*x);
-        var coiny =Math.floor(Math.random()*y);
-        myCoins.push(new BlockMaker(10,10, "yellow", coinx, coiny));
+        var coinx = Math.floor(Math.random() * x);
+        var coiny = Math.floor(Math.random() * y);
+        myCoins.push(new BlockMaker(15, 15, "yellow", coinx, coiny));
     }
-    //controls speed green blocks move across the page
 
+
+    //creates random moving bricks
+    var brickx = Math.floor(Math.random() * x);
+    myBricks.push(new BlockMaker(10, 10, "red", brickx, 0));
+
+    //controls speed green blocks move across the page
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -2;
         myObstacles[i].update();
     }
+
     //controls speed coins move across the page
 
     for (i = 0; i < myCoins.length; i += 1) {
@@ -133,39 +149,35 @@ function updateGameArea() {
         myCoins[i].update();
     }
 
-    score.text="SCORE: " + myGameArea.frameNo;
-    score.update();
-    block1.newPos();
-    block1.update();
+    //controls speed of bricks across page
+    for (i = 0; i < myBricks.length; i += 1) {
+        myBricks[i].x += -2;
+        myBricks[i].y+=1;
+        myBricks[i].update();
+    }
 
+        //sets score
+        score.text = "SCORE: " + Math.floor((((myGameArea.frameNo) / 100) + coinNum));
+        score.update();
 
-        //mouse
-       //  if (myGameArea.x && myGameArea.y) {
-       //      block1.x = myGameArea.x;
-       //      block1.y = myGameArea.y;
-       //  }
-            //arrow keys
-        // if (myGameArea.keys && myGameArea.keys[37]) {block1.speedX = -1; }
-        // if (myGameArea.keys && myGameArea.keys[39]) {block1.speedX = 1; }
-        // if (myGameArea.keys && myGameArea.keys[38]) {block1.speedY = -1; }
-        // if (myGameArea.keys && myGameArea.keys[40]) {block1.speedY = 1; }
-
-
+        block1.newPos();
+        block1.update();
     }
 
     //keyboard controls
 
-function moveup(){
-    block1.speedY-=1;
-}
-function movedown(){
-    block1.speedY+=1;
-}
+    function moveup() {
+        block1.speedY -= 1;
+    }
 
-function moveright(){
-    block1.speedX+=1;
-}
+    function movedown() {
+        block1.speedY += 1;
+    }
 
-function moveleft(){
-    block1.speedX-=1;
-}
+    function moveright() {
+        block1.speedX += 1;
+    }
+
+    function moveleft() {
+        block1.speedX -= 1;
+    }
