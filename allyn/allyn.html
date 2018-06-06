@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="allyn.js"></script>
+    <link rel="stylesheet" href="allyn.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+
+
+<body onload="startGame()">
+
+<h1>Open Ocean</h1>
+
+
+<div id="nameID">
+<input type="text" id="name" value="" size="25" placeholder="Type Nickname Here">
+<button onclick="enterName()" class="btn btn-danger">Submit</button>
+</div>
+
+<div id="div">
+<button id="continue" onclick="myGameArea.start()"  class="btn btn-success">Continue</button>
+<button onclick="myGameArea.pause()" class="btn btn-warning">Pause</button>
+    <div id="message">You can pause the game and add a Nickname!</div>
+</div>
+
+<div id="restart">
+    <button onclick="startGame()" class="btn btn-danger">Restart</button>
+</div>
+
+<div id="scoreboard">
+</div>
+
+</body>
+</html>
