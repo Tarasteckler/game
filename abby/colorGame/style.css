@@ -1,0 +1,28 @@
+div {
+
+    width: 70px;
+    height: 70px;
+    margin-top: 5px;
+    position: relative;
+
+}
+
+div.selected {
+    box-shadow:1px 12px 22px 1px #ffe57b;
+    border: solid 2px #ffe57b;
+}
+
+.slideContainer {
+    width: 100%;
+}
+
+.slider {
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+h1 {
+    font-size: 15px;
+    font-style: normal;
+}
