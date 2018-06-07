@@ -1,8 +1,8 @@
-//red = ["#FEF1F2","#FAD2D4","#F5A4A8","#F1767C","#EC4850","#E82A32","#D91720","#BA141B","#9C1017","#7D0D12","#6E0C10","#4F080C"];
-//fffafa to ff0000
 red=["#ff0000"];
-green = ["#44FF8A","#43F585","#40EC80","#3DDB78","#38C96E","#33B262","#2D9955","#268148","#206F3D","#17502C"];
-blue = ["#17C8FF","#15BFF3","#14B6E8","#12A9D7","#1197C0","#1089AF","#0F7A9B","#0E6F8D","#0C617B","#0B546B","#094355"];
+//green = ["#44FF8A","#43F585","#40EC80","#3DDB78","#38C96E","#33B262","#2D9955","#268148","#206F3D","#17502C"];
+//blue = ["#17C8FF","#15BFF3","#14B6E8","#12A9D7","#1197C0","#1089AF","#0F7A9B","#0E6F8D","#0C617B","#0B546B","#094355"];
+green=[];
+blue=[];
 selected = 0;
 currentColor="";
 
@@ -45,6 +45,23 @@ $(document).ready(function(){
         $("#verif").text("");
        checkSort();
     });
+//condense range for hard setting
+    $(".slideContainer").on("change", function(){
+        if(currentColor=="red"){
+            red=[];
+            displayColors(red);
+            console.log(red);
+        }
+        if(currentColor=="green"){
+            green=[];
+            displayColors(green);
+        }
+        if(currentColor=="blue"){
+            blue=[];
+            displayColors(blue);
+        }
+
+    });
 
 });
 
@@ -52,9 +69,23 @@ function getColors(){
     var slider=$("#hexRange").val();
     if(currentColor=="red"){
         var b=parseInt(slider);
-        for(var i=0; i<250/slider; i++){
+        for(var i=0; i<250/slider-1; i++){
             red.push("#ff"+denToHex(b)+denToHex(b));
             b+=parseInt(slider);
+        }
+    }
+    if(currentColor=="green"){
+        var r=parseInt(slider);
+        for(var j=0; j<250/slider-1; j++){
+            green.push("#"+denToHex(r)+"ff"+denToHex(r));
+            r+=parseInt(slider);
+        }
+    }
+    if(currentColor=="blue"){
+        var g=parseInt(slider);
+        for(var k=0; k<250/slider-1; k++){
+            blue.push("#"+denToHex(g)+denToHex(g)+"ff");
+            g+=parseInt(slider);
         }
     }
 }
@@ -62,15 +93,30 @@ function getColors(){
 function displayColors(arr){
     getColors();
     var colorsUsed = [];
-    while (colorsUsed.length<9){
-        var color = arr[Math.floor(Math.random()*arr.length)];
-        if(colorsUsed.indexOf(color)==-1){
-            colorsUsed.push(color);
+    var slider=parseInt($("#hexRange").val());
+    if(250/slider-1>8){
+        while (colorsUsed.length<9){
+            var color = arr[Math.floor(Math.random()*arr.length)];
+            if(colorsUsed.indexOf(color)==-1){
+                colorsUsed.push(color);
+            }
+        }
+        for(var j=0; j<9; j++){
+            $("#c"+j).css("background-color",colorsUsed[j]);
+        }
+    }else{
+        while(colorsUsed.length<250/slider-1){
+            var color = arr[Math.floor(Math.random()*arr.length)];
+            if(colorsUsed.indexOf(color)==-1){
+                colorsUsed.push(color);
+            }
+        }
+        for(var k=0; k<250/slider-1; k++){
+            $(".colors").css("background-color", "white");
+            $("#c"+k).css("background-color",colorsUsed[k]);
         }
     }
-    for(var j=0; j<9; j++){
-        $("#c"+j).css("background-color",colorsUsed[j]);
-    }
+
 }
 
 function swapColors(){
@@ -95,7 +141,6 @@ function swapColors(){
         $('.selected').removeClass('selected');
     }
 
-
     //highlight selected colors on click
     //get RGB val on click
     //swap RGB vals
@@ -106,16 +151,16 @@ function checkSort(){
     for(var i=0; i<8; i++){
         var j=i+1;
         if(currentColor=="red"){
-            var prev=getG("#c"+i);
-            var next=getG("#c"+j);
+            var prev=getB("#c"+i);
+            var next=getB("#c"+j);
         }
         if(currentColor=="green"){
             var prev=getR("#c"+i);
             var next=getR("#c"+j);
         }
         if(currentColor=="blue"){
-            var prev=getB("#c"+i);
-            var next=getB("#c"+j);
+            var prev=getG("#c"+i);
+            var next=getG("#c"+j);
         }
 
         if(prev<next){
@@ -151,8 +196,19 @@ function getB(id){
     return b;
 }
 
-
-
+function denToHex(den){
+    var hex="";
+    var hexDigits=["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
+    if(den%16==0){
+        hex+=hexDigits[Math.floor(den/16)];
+        hex+="0";
+    }
+    if(den%16!=0){
+        hex += hexDigits[Math.floor(den/16)];
+        hex += hexDigits[Math.floor(den%16)];
+    }
+    return hex;
+}
 
 
 //inefficient hex to decimal conversion
@@ -190,21 +246,4 @@ function hexToDen2(hex) {
         den+=15;
     }
     return den;
-}
-
-function denToHex(den){
-    var hex="";
-    var hexDigits=["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"];
-    if(den%16==0){
-        console.log(hexDigits[Math.floor(den/16)]);
-        hex+=hexDigits[Math.floor(den/16)];
-        console.log(hex);
-        hex+="0";
-    }
-    if(den%16!=0){
-        console.log(hexDigits[Math.floor(den/16)+1]);
-        hex += hexDigits[Math.floor(den/16)];
-        hex += hexDigits[Math.floor(den%16)];
-    }
-    return hex;
 }
