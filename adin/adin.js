@@ -16,7 +16,7 @@ var allScores=[];
 
 function startGame() {
     myGameArea.start();
-    block1 = new BlockMaker(50, 50, "imgFolder/alby.png", 0, 0, "image");
+    block1 = new BlockMaker(50, 50, "imgFolder/alby.png", 30, 250, "image");
     score = new BlockMaker("18px", "Consolas", "black", 850, 40, "text");
     highScore=new BlockMaker("19px", "Consolas", "black", 850, 80, "text");
 
@@ -31,6 +31,10 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.key = e.keyCode;
+        });
+
         this.frameNo=0;
     },
     clear : function() {
@@ -115,6 +119,9 @@ function everyinterval(n) {
 
         function updateGameArea() {
             var x, y;
+            if (myGameArea.key && myGameArea.key == 38) {block1.speedY = -(1+myGameArea.frameNo/350); }
+            console.log(1+myGameArea.frameNo/350);
+            if (myGameArea.key && myGameArea.key == 40) {block1.speedY = (1+myGameArea.frameNo/350); }
 
             //removes coins and adds 10 points if crash with coin
             for (i = 0; i < myCoins.length; i++) {
@@ -148,6 +155,16 @@ function everyinterval(n) {
                 }
             }
 
+            //stops game if go off screen
+            if (block1.y<0||block1.y>450){
+                myGameArea.stop();
+                allScores.push(Math.floor((((myGameArea.frameNo) / 100) + coinNum)));
+                gameOver();
+                //displays restart button
+                document.getElementById("restart").innerHTML=("Restart");
+                return;
+            }
+
             function gameOver(){
                 gameOver=new BlockMaker("40px", "Consolas", "black", 400, 250, "text");
                 gameOver.text="GAME OVER";
@@ -166,8 +183,8 @@ function everyinterval(n) {
                 var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
 
                 //determines verticle space between obstacles and adds them to array
-                var minGap = 75;
-                var maxGap = 200;
+                var minGap = 150;
+                var maxGap = 300;
                 var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
                 myObstacles.push(new BlockMaker(10, x - height - gap, "green", x, height + gap));
                 myObstacles.push(new BlockMaker(10, height, "green", x, 0));
@@ -224,23 +241,6 @@ function everyinterval(n) {
             block1.update();
         }
 
-        //keyboard controls
-
-        function moveup() {
-            block1.speedY -= 2;
-        }
-
-        function movedown() {
-            block1.speedY += 2;
-        }
-
-        function moveright() {
-            block1.speedX += 2;
-        }
-
-        function moveleft() {
-            block1.speedX -= 2;
-        }
 
 function restart() {
     myGameArea.clear();
@@ -248,7 +248,7 @@ function restart() {
     myGameArea.frameNo = 0;
     myGameArea.interval = 0;
     block1.x = 0;
-    block1.y = 120;
+    block1.y = 0;
     block1.speedX = 0;
     block1.speedY = 0;
     myObstacles = [];
