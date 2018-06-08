@@ -23,6 +23,23 @@ div.selected {
 }
 
 h1 {
+    font-size: 30px;
+    font-style: normal;
+    text-align: center;
+}
+
+h2 {
     font-size: 15px;
     font-style: normal;
+}
+
+body{
+
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }

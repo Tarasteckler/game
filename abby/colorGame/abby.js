@@ -6,6 +6,7 @@ blue=[];
 selected = 0;
 currentColor="";
 
+//background-image: url("https://www.sessions.edu/wp-content/themes/divi-child/color-calculator/wheel-5-ryb.png");
 //https://htmlcolorcodes.com/
 //color sort
 //function to change hex to denary
@@ -14,6 +15,10 @@ currentColor="";
 //make slider for difficulty that determines how far apart the colors are
 //https://www.w3schools.com/howto/howto_js_rangeslider.asp
 //algorithm to calculate minimum number of swaps necessary
+
+//if 31<slider<=35, 7 spaces
+//if 27<slider<=31, 8 spaces
+//if 4<slider<=27, 9 spaces
 
 $(document).ready(function(){
 
@@ -111,8 +116,8 @@ function displayColors(arr){
                 colorsUsed.push(color);
             }
         }
+        $(".colors").css("background-color", "transparent");
         for(var k=0; k<250/slider-1; k++){
-            $(".colors").css("background-color", "white");
             $("#c"+k).css("background-color",colorsUsed[k]);
         }
     }
@@ -148,6 +153,7 @@ function swapColors(){
 
 function checkSort(){
     var correctSwaps=0;
+    var slider=parseInt($("#hexRange").val());
     for(var i=0; i<8; i++){
         var j=i+1;
         if(currentColor=="red"){
@@ -170,9 +176,22 @@ function checkSort(){
             correctSwaps++;
         }
         //make sure check swap looks at all comparisons
-        if(prev>next&&correctSwaps==8){
-            $("#verif").text('good job');
+        if(slider<=27){
+            if(prev>next&&correctSwaps==8){
+                $("#verif").text('good job');
+            }
         }
+        if(slider>27 && slider<=32){
+            if(prev>next&&correctSwaps==7){
+                $("#verif").text('good job');
+            }
+        }
+        if(slider>31){
+            if(prev>next&&correctSwaps==6){
+                $("#verif").text('good job');
+            }
+        }
+
     }
 }
 
