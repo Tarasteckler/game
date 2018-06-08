@@ -15,6 +15,7 @@ var myBricks=[];
 var allScores=[];
 
 function startGame() {
+    document.getElementById("restart").style.visibility = "hidden";
     myGameArea.start();
     block1 = new BlockMaker(50, 50, "imgFolder/alby.png", 30, 250, "image");
     score = new BlockMaker("18px", "Consolas", "black", 850, 40, "text");
@@ -138,7 +139,7 @@ function everyinterval(n) {
                     allScores.push(Math.floor((((myGameArea.frameNo) / 100) + coinNum)));
                     gameOver();
                     //displays restart button
-                    document.getElementById("restart").innerHTML=("Restart");
+                    document.getElementById("restart").style.visibility = "visible";
                     return;
                 }
             }
@@ -150,7 +151,7 @@ function everyinterval(n) {
                     allScores.push(Math.floor((((myGameArea.frameNo) / 100) + coinNum)));
                     gameOver();
                     //displays restart button
-                    document.getElementById("restart").innerHTML=("Restart");
+                    document.getElementById("restart").style.visibility = "visible";
                     return;
                 }
             }
@@ -244,6 +245,9 @@ function everyinterval(n) {
 
 function restart() {
     myGameArea.clear();
+    myBricks=[];
+    myObstacles = [];
+    myCoins=[];
     block1.frameNo = 0;
     myGameArea.frameNo = 0;
     myGameArea.interval = 0;
@@ -251,9 +255,7 @@ function restart() {
     block1.y = 0;
     block1.speedX = 0;
     block1.speedY = 0;
-    myObstacles = [];
-    myCoins=[];
     coinNum=0;
-    myBricks=[];
+
     startGame();
 }
