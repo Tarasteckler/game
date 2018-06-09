@@ -5,25 +5,32 @@
     <title>Color Sort</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="abby.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type = "text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </head>
 <br>
 <body>
-<h1>Color Sort</h1>
-<img src="color_wheel.png" class="center">
-<br>
-<button id="red">Red</button>
-<button id="blue">Blue</button>
-<button id="green">Green</button>
-<button id="check">Check</button>
+<div class="titleContainer">
+    <img src="color_wheel.png" alt="colorWheel" style="width:100px; height:100px">
+    <div class="centered">Color Sort</div>
+</div>
+<h1>Sort from lightest tint to darkest</h1>
+<div id="buttons">
+    <button id="red" class="btn btn-danger">Red</button>
+    <button id="blue" class="btn btn-primary">Blue</button>
+    <button id="green" class="btn btn-success"> Green</button>
+    <button id="check" class="btn btn-default">Check</button>
+</div>
+
 <div id="verif"></div>
+<br>
 <h2>Difficulty: Hard to Easy</h2>
 <div class="slideContainer">
     <input type="range" min="5" max="35" value="20" id="hexRange" class="slider">
 </div>
-
+<br>
 
 <div id="c0" class="colors"></div>
 <div id="c1" class="colors"></div>

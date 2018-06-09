@@ -1,4 +1,4 @@
-div {
+div.center{
 
     width: 70px;
     height: 70px;
@@ -13,7 +13,7 @@ div.selected {
 }
 
 .slideContainer {
-    width: 100%;
+    width: 25%;
 }
 
 .slider {
@@ -23,9 +23,9 @@ div.selected {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 15px;
     font-style: normal;
-    text-align: center;
+    text-align: left;
 }
 
 h2 {
@@ -33,13 +33,35 @@ h2 {
     font-style: normal;
 }
 
-body{
-
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
 }
 
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 20px;
+}
+
+.titleContainer {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+div.colors{
+    margin: auto;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+body {
+    background-color: lightcyan;
 }
