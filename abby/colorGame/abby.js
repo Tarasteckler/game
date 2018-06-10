@@ -1,6 +1,4 @@
-red=["#ff0000"];
-//green = ["#44FF8A","#43F585","#40EC80","#3DDB78","#38C96E","#33B262","#2D9955","#268148","#206F3D","#17502C"];
-//blue = ["#17C8FF","#15BFF3","#14B6E8","#12A9D7","#1197C0","#1089AF","#0F7A9B","#0E6F8D","#0C617B","#0B546B","#094355"];
+red=[];
 green=[];
 blue=[];
 selected = 0;
@@ -157,8 +155,8 @@ function checkSort(){
     for(var i=0; i<8; i++){
         var j=i+1;
         if(currentColor=="red"){
-            var prev=getB("#c"+i);
-            var next=getB("#c"+j);
+            var prev=getG("#c"+i);
+            var next=getG("#c"+j);
         }
         if(currentColor=="green"){
             var prev=getR("#c"+i);
@@ -170,25 +168,26 @@ function checkSort(){
         }
 
         if(prev<next){
-            $("#verif").text('wrong order, try again');
+            $("#verif").text('Wrong order - try again.');
 
-        }else{
+        }
+        if(prev>next){
             correctSwaps++;
         }
         //make sure check swap looks at all comparisons
         if(slider<=27){
             if(prev>next&&correctSwaps==8){
-                $("#verif").text('good job');
+                $("#verif").text('Good job!');
             }
         }
         if(slider>27 && slider<=32){
             if(prev>next&&correctSwaps==7){
-                $("#verif").text('good job');
+                $("#verif").text('Good job!');
             }
         }
         if(slider>31){
             if(prev>next&&correctSwaps==6){
-                $("#verif").text('good job');
+                $("#verif").text('Good job!');
             }
         }
 
@@ -209,11 +208,7 @@ function getG(id){
     return g;
 }
 
-function getB(id){
-    var rgb=$(id).css("background-color");
-    var b=parseInt(rgb.substring(12));
-    return b;
-}
+//fix substring so it works for 1, 2, and 3-digit b values
 
 function denToHex(den){
     var hex="";
@@ -227,42 +222,4 @@ function denToHex(den){
         hex += hexDigits[Math.floor(den%16)];
     }
     return hex;
-}
-
-
-//inefficient hex to decimal conversion
-function hexToDen1(hex) {
-    var n1 = hex.substring(1, 2);
-    console.log(n1);
-    var n2 = hex.substring(2, 3);
-    var den = 0;
-    den += hexToDen2(n1);
-    den+=hexToDen2(n2);
-    return den;
-}
-
-function hexToDen2(hex) {
-    var den=0;
-    if(hex>=0 && hex<10){
-        den+=parseInt(hex);
-    }
-    if(hex=="A"){
-        den+=10;
-    }
-    if(hex=="B"){
-        den+=11;
-    }
-    if(hex=="C"){
-        den+=12;
-    }
-    if(hex=="D"){
-        den+=13;
-    }
-    if(hex=="E"){
-        den+=14;
-    }
-    if(hex=="F"){
-        den+=15;
-    }
-    return den;
 }
