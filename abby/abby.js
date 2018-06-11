@@ -3,6 +3,7 @@
 // create pause function
 // score
 //continuous staircases go all the way to bottom of canvas and appear gradually
+// make so component can't leave canvas
 
 function startGame() {
     myGameArea.start();
@@ -108,13 +109,15 @@ function updateGameArea(){
 
     if(!pause) {
         myGameArea.frameNo+=1;
+    }else{
+        myGameArea.frameNo+=0;
     }
     var pause = false;
 
 
     if(myGameArea.frameNo==1||everyInterval(400)){
          x=myGameArea.canvas.width;
-         y=myGameArea.canvas.height-400;
+         y=myGameArea.canvas.height;
          generateMaze();
     }
     for(var i = 0; i< obs1.length; i++){
@@ -220,12 +223,15 @@ function generateMaze(){
     console.log(obs1);
 
     obs2=[];
-    gaps2=[160,180,200,220,240,260,280,300,320,340,360,380];
+    gaps2=[20,40,60,80,100,120,140,160];
+    gs2=[180,200,220,240,260,280,300,320,340,360,380];
     var obst2 = new Obstacle(30,10,150,0);
     obs2.push(obst2);
     var count2 = 0;
     var gap2 = gaps2[Math.floor(Math.random()*gaps2.length)];
-    while (obs2[count2].x+obs2[count2].width<400 && obs2[count2].y+obs2[count2].height<400){
+    var g2=gs2[Math.floor(Math.random()*gs2.length)];
+    console.log(gap2);
+    while (obs2[count2].y+obs2[count2].height<400){
         tempX=obs2[count2].x;
         tempWidth = obs2[count2].width;
         tempY = obs2[count2].y;
@@ -236,7 +242,7 @@ function generateMaze(){
 
 
         }else{
-            if(tempX>gap2&&tempX<gap2+20){
+            if(tempY>gap2&&tempY<gap2+20){
                 width=widths[Math.floor(Math.random()*widths.length)];
                 obs2.push(new Obstacle(10,height,tempX+tempWidth+20,tempY+30));
             }else{
@@ -274,4 +280,42 @@ function generateMaze(){
         count3++;
     }
 
+}
+
+
+//inefficient hex to decimal conversion
+function hexToDen1(hex) {
+    var n1 = hex.substring(1, 2);
+    console.log(n1);
+    var n2 = hex.substring(2, 3);
+    var den = 0;
+    den += hexToDen2(n1);
+    den+=hexToDen2(n2);
+    return den;
+}
+
+function hexToDen2(hex) {
+    var den=0;
+    if(hex>=0 && hex<10){
+        den+=parseInt(hex);
+    }
+    if(hex=="A"){
+        den+=10;
+    }
+    if(hex=="B"){
+        den+=11;
+    }
+    if(hex=="C"){
+        den+=12;
+    }
+    if(hex=="D"){
+        den+=13;
+    }
+    if(hex=="E"){
+        den+=14;
+    }
+    if(hex=="F"){
+        den+=15;
+    }
+    return den;
 }

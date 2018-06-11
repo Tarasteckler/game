@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <head>
+    <span id="header">ALBINSON ATTACK</span>
     <link rel="stylesheet" href="adin.css">
     <meta charset="UTF-8">
     <title>Adin's Game</title>
     <script src="adin.js"></script>
 </head>
 <body onload="startGame()">
+<button id="home"><a href="/game/topIndex.html">Return to homepage</a></button>
 
 <!--keyboard controls-->
-<button onmousedown="moveup()" onmouseup="stopMove()">UP</button>
-<button onmousedown="movedown()" onmouseup="stopMove()" >DOWN</button>
-<button onmousedown="moveleft()" onmouseup="stopMove()" >LEFT</button>
-<button onmousedown="moveright()" onmouseup="stopMove()" >RIGHT</button>
+<button type="button" class="btn btn-success btn-lg" id="restart" onclick="restart()">Restart</button>
 </body>
 </html>

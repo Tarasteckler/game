@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Sort</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="abby.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type = "text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+<br>
+<body>
+<div class="titleContainer">
+    <img src="color_wheel.png" alt="colorWheel" style="width:120px; height:120px">
+    <div class="centered">Color Sort</div>
+</div>
+<h1>Sort colors from lightest to darkest. Click two to swap.</h1>
+<div id="buttons">
+    <button id="red" class="btn btn-danger">Red</button>
+    <button id="blue" class="btn btn-primary">Blue</button>
+    <button id="green" class="btn btn-success"> Green</button>
+    <button id="check" class="btn btn-default">Check</button>
+</div>
+<br>
+<h2>Difficulty: Hard to Easy</h2>
+<div class="slideContainer">
+    <input type="range" min="5" max="35" value="20" id="hexRange" class="slider">
+</div>
+<br>
+
+<div id="c0" class="colors"></div>
+<div id="c1" class="colors"></div>
+<div id="c2" class="colors"></div>
+<div id="c3" class="colors"></div>
+<div id="c4" class="colors"></div>
+<div id="c5" class="colors"></div>
+<div id="c6" class="colors"></div>
+<div id="c7" class="colors"></div>
+<div id="c8" class="colors"></div>
+<br>
+<div id="verif"></div>
+</body>
+</html>

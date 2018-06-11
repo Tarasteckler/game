@@ -23,13 +23,13 @@ header{
 }
 
 .menuButton:hover{
-    background-color: orange;
+    background-color: cornflowerblue;
     color: white;
     transition-duration: 0.4s;
 }
 
 body{
-    background: radial-gradient(circle, white, cornflowerblue, darkblue) fixed;
+    background: radial-gradient(circle, lightskyblue, cornflowerblue, darkblue) fixed;
     background-repeat: no-repeat;
     background-size: cover;
 }

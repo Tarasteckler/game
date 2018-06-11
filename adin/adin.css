@@ -1,4 +1,22 @@
 canvas {
     border:1px solid #d3d3d3;
     background-color: #f1f1f1;
+    position: fixed;
+    top: 100px;
+
+
+}
+
+#header{
+    text-align: center;
+    font-size: 100px;
+    font-family: "Al Nile";
+    color: purple;
+    top: 0;
+}
+
+#restart{
+    /*button-align: center;*/
+    /*top:100px;*/
+    left:100px;
 }
