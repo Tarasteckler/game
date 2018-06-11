@@ -48,7 +48,8 @@ th, td {
 }
 
 
-#div{
+
+#restart{
     position: absolute;
     margin: auto;
     top: 550px;
@@ -56,17 +57,6 @@ th, td {
     bottom: 0;
     left: 0;
     width: 200px;
-    height: 100px;
-}
-
-#restart{
-    position: absolute;
-    margin: auto;
-    top: 650px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 250px;
     height: 100px;
 }
 
@@ -99,4 +89,17 @@ th, td {
 
 #message{
     color: #a4a4a4;
+
+}
+
+#gameMessage{
+    margin: auto;
+    width: 60%;
+    padding: 0px;
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    letter-spacing: -1px;
+    line-height: 20px;
+    color: #bbbbbb;
 }
