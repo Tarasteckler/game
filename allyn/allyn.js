@@ -17,6 +17,7 @@ var myMusic;
 
 function startGame() {
     document.getElementById("scoreboard").style.display = "none";
+    document.getElementById("restartButton").disabled = true;
     document.getElementById("nameID").innerHTML = "<input type=\"text\" id=\"name\" value=\"\" size=\"25\" placeholder=\"Type Nickname Here\">\n" +
         "<button onclick=\"enterName()\" class=\"btn btn-danger\">Submit</button>";
     myName = "";
@@ -41,6 +42,7 @@ var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
         myMusic.play();
+        document.getElementById("restart").disabled = true;
         document.getElementById('restart').style.display = 'inline';
         // document.getElementById("continue").disabled = true;
         starCount=0;
@@ -65,6 +67,7 @@ var myGameArea = {
     },
     stop : function() {
         myMusic.stop();
+        document.getElementById("restartButton").disabled = false;
         document.getElementById('restart').style.display = 'none';
         clearInterval(this.interval);
         document.getElementById('restart').style.display = 'inline';
