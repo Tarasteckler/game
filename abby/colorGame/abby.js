@@ -100,16 +100,19 @@ function displayColors(arr){
     if(250/slider-1>8){
         if(250/slider>=25){
             var arr2=arr.slice(0,15);
-            var col = arr2[Math.floor(Math.random()*arr2.length)];
-            if(colorsUsed.indexOf(col)==-1){
-                colorsUsed.push(col);
+            console.log(arr2);
+            while (colorsUsed.length<9){
+                var col = arr2[Math.floor(Math.random()*arr2.length)];
+                if(colorsUsed.indexOf(col)==-1){
+                    colorsUsed.push(col);
+                }
             }
-        console.log(arr2);
-        }
-        while (colorsUsed.length<9){
-            var color = arr[Math.floor(Math.random()*arr.length)];
-            if(colorsUsed.indexOf(color)==-1){
-                colorsUsed.push(color);
+        }else{
+            while (colorsUsed.length<9){
+                var color = arr[Math.floor(Math.random()*arr.length)];
+                if(colorsUsed.indexOf(color)==-1){
+                    colorsUsed.push(color);
+                }
             }
         }
         for(var j=0; j<9; j++){
