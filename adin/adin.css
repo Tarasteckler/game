@@ -16,7 +16,13 @@ canvas {
 }
 
 #restart{
-    /*button-align: center;*/
-    /*top:100px;*/
-    left:100px;
+    position: absolute;
+    left:1100px;
+    top:300px;
 }
+
+/*!*#home{*!*/
+    /*position:absolute;;*/
+    /*left:1100px;*/
+    /*top:100px;*/
+/*}*/

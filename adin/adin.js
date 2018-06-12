@@ -162,7 +162,7 @@ function everyinterval(n) {
                 allScores.push(Math.floor((((myGameArea.frameNo) / 100) + coinNum)));
                 gameOver();
                 //displays restart button
-                document.getElementById("restart").innerHTML=("Restart");
+                document.getElementById("restart").style.visibility = "visible";
                 return;
             }
 
@@ -256,6 +256,7 @@ function restart() {
     block1.speedX = 0;
     block1.speedY = 0;
     coinNum=0;
+
 
     startGame();
 }
