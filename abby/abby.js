@@ -281,3 +281,41 @@ function generateMaze(){
     }
 
 }
+
+
+//inefficient hex to decimal conversion
+function hexToDen1(hex) {
+    var n1 = hex.substring(1, 2);
+    console.log(n1);
+    var n2 = hex.substring(2, 3);
+    var den = 0;
+    den += hexToDen2(n1);
+    den+=hexToDen2(n2);
+    return den;
+}
+
+function hexToDen2(hex) {
+    var den=0;
+    if(hex>=0 && hex<10){
+        den+=parseInt(hex);
+    }
+    if(hex=="A"){
+        den+=10;
+    }
+    if(hex=="B"){
+        den+=11;
+    }
+    if(hex=="C"){
+        den+=12;
+    }
+    if(hex=="D"){
+        den+=13;
+    }
+    if(hex=="E"){
+        den+=14;
+    }
+    if(hex=="F"){
+        den+=15;
+    }
+    return den;
+}

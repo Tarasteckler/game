@@ -1,7 +1,10 @@
 
 var myGamePiece;
 var myObstacles = [];
+var mySeaweed = [];
+var myOctopus = [];
 var myCoins = [];
+var myShark = [];
 var myBubbles = [];
 var myRuns = [];
 var myScore;
@@ -14,15 +17,15 @@ var myMusic;
 
 function startGame() {
     document.getElementById("scoreboard").style.display = "none";
+    document.getElementById("restartButton").disabled = true;
     document.getElementById("nameID").innerHTML = "<input type=\"text\" id=\"name\" value=\"\" size=\"25\" placeholder=\"Type Nickname Here\">\n" +
         "<button onclick=\"enterName()\" class=\"btn btn-danger\">Submit</button>";
     myName = "";
     myGamePiece = new component(60, 48, "images/submarine.png", 10, 120, "image");
     myScore = new component("25px", "Consolas", "black", 240, 40, "text");
     myStarScore = new component("25px", "Consolas", "black", 500, 40, "text");
-    mySound = new sound("music/coinSound.zip");
+    mySound = new sound("music/coinSound.wave");
     myMusic = new sound("music/background.mp3");
-    myMusic.play();
     myGameArea.start();
 }
 
@@ -38,13 +41,14 @@ function enterName() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-
+        myMusic.play();
+        document.getElementById("restart").disabled = true;
         document.getElementById('restart').style.display = 'inline';
-        document.getElementById("continue").disabled = true;
+        // document.getElementById("continue").disabled = true;
         starCount=0;
-        document.getElementById("continue").disable = true;
-        document.getElementById('div').style.display = 'inline';
-        document.getElementById('restart').style.display = 'none';
+        // document.getElementById("continue").disable = true;
+        // document.getElementById('div').style.display = 'inline';
+        // document.getElementById('restart').style.display = 'none';
         this.canvas.width = 800;
         this.canvas.height = 400;
         this.context = this.canvas.getContext("2d");
@@ -62,11 +66,10 @@ var myGameArea = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     stop : function() {
-
+        myMusic.stop();
+        document.getElementById("restartButton").disabled = false;
         document.getElementById('restart').style.display = 'none';
         clearInterval(this.interval);
-        document.getElementById('continue').disable = false;
-        document.getElementById('div').style.display = 'none';
         document.getElementById('restart').style.display = 'inline';
 
         //local storage stuff
@@ -106,9 +109,10 @@ var myGameArea = {
 
     },
     pause : function(){
+        myMusic.stop();
 
         document.getElementById('restart').style.display = 'none';
-        document.getElementById("continue").disabled = false;
+        // document.getElementById("continue").disabled = false;
         clearInterval(this.interval);
         document.getElementById('restart').style.display = 'inline';
     }
@@ -216,8 +220,20 @@ function updateGameArea() {
         }
     }
 
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
+    for (i = 0; i < mySeaweed.length; i += 1) {
+        if (myGamePiece.crashWith(mySeaweed[i])) {
+            myGameArea.stop();
+            return;
+        }
+    }
+    for (i = 0; i < myOctopus.length; i += 1) {
+        if (myGamePiece.crashWith(myOctopus[i])) {
+            myGameArea.stop();
+            return;
+        }
+    }
+    for (i = 0; i < myShark.length; i += 1) {
+        if (myGamePiece.crashWith(myShark[i])) {
             myGameArea.stop();
             return;
         }
@@ -231,21 +247,27 @@ function updateGameArea() {
         maxHeight = 300;
         height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
         var z = Math.floor(Math.random() * y) + 70;
-        var coinPos = Math.floor(Math.random() * y) + 80;
+        var sharkpos = Math.floor(Math.random() * y) + 80;
         var bubSize = Math.floor(Math.random() * 30) + 10;
         var bubPos1 = Math.floor(Math.random() * 300) + 400;
         var bubPos2 = Math.floor(Math.random() * 300) + 400;
-        myObstacles.push(new component(40, 40, "images/octopus.png", x + 50, z, "image"));
-        myObstacles.push(new component(70, 100, "images/seaweed.png", x, 320, "image"));
-        // myCoins.push(new component(20, 20, "star.png", x + 50, coinPos, "image"));
+        myOctopus.push(new component(40, 40, "images/octopus.png", x + 50, z, "image"));
+        mySeaweed.push(new component(70, 100, "images/seaweed.png", x, 320, "image"));
+        myShark.push(new component(150, 40, "images/shark.png", x + 1000, 200, "image"));
         myCoins.push(new component(20, 20, "images/star.png", bubPos2 +5 , 325, "image"));
         myBubbles.push(new component(30, 30, "images/bubble.png", bubPos2, 320, "image"))
         myBubbles.push(new component(bubSize, bubSize, "images/bubble.png", bubPos1, 300, "image"))
     }
-    for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].speedX = -1;
-        myObstacles[i].newPos();
-        myObstacles[i].update();
+    for (i = 0; i < mySeaweed.length; i += 1) {
+        mySeaweed[i].speedX = -1;
+        mySeaweed[i].newPos();
+        mySeaweed[i].update();
+    }
+    for (i = 0; i < myOctopus.length; i += 1) {
+        myOctopus[i].speedX = -1;
+        myOctopus[i].speedX = -1;
+        myOctopus[i].newPos();
+        myOctopus[i].update();
     }
 
     for (i = 0; i < myCoins.length; i += 1) {
@@ -253,6 +275,12 @@ function updateGameArea() {
         myCoins[i].speedY = -1;
         myCoins[i].newPos();
         myCoins[i].update();
+    }
+
+    for (i = 0; i < myShark.length; i += 1) {
+        myShark[i].speedX = -2;
+        myShark[i].newPos();
+        myShark[i].update();
     }
 
     for (i = 0; i < myBubbles.length; i += 1) {
